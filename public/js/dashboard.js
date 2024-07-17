@@ -20,7 +20,6 @@ async function submitButtonHandler(event) {
   }
 
   if (!response.ok) {
-    console.log(response.statusText);
     alert(response.statusText);
   }
   else {
