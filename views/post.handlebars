@@ -1,0 +1,24 @@
+<form class="postDetail">
+    {{! POST }}
+    {{! title }}
+    <div class="mt-5 mb-3">
+        <label class="form-label">Title</label>
+        <input class="form-control" value={{title}} id="titleInput" maxlength="50" />
+    </div>
+    {{! body }}
+    <div class="mb-3">
+        <label class="form-label">Body</label>
+        <textarea class="form-control" id="bodyInput" rows="10">{{content}}</textarea>
+    </div>
+    {{! submit Btn }}
+    <div class="text-center">
+        <button type="submit" id="editBtn" data-id="{{id}}" class="text-center mt-3 btn btn-dark btn-lg btn-block">Edit</button>
+        <button
+          class="btn btn-dark"
+          id="deleteBtn"
+          data-id="{{id}}"
+        >Delete</button>
+    </div>
+</form>
+
+<script src="/js/post.js"></script>

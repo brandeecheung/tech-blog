@@ -1,0 +1,16 @@
+{{! Homepage }}
+{{! Loop over each object in the blogPosts array }}
+<div class="container">
+  <div class="row homepage-main">
+    {{#each posts as |blogPost|}}
+      <div class="row mb-4 project card text-dark shadow">
+        <div class="card-header">
+          <h3>
+            <a href="/blogPost/{{blogPost.id}}">{{blogPost.title}}</a>
+          </h3>
+          <p>{{format_date blogPost.date_created}}</p>
+        </div>
+      </div>
+    {{/each}}
+  </div>
+</div>

@@ -9,10 +9,12 @@ router.get('/', async (req, res) => {
       include: [
         {
           model: User,
-          attributes: ['username'],
+          attributes: ['name'],
         },
       ],
     });
+
+    // console.log(postData)
 
     const posts = postData.map((post) => post.get({ plain: true }));
 
@@ -21,6 +23,7 @@ router.get('/', async (req, res) => {
       logged_in: req.session.logged_in,
     });
   } catch (err) {
+    console.log(err);
     res.status(500).json(err);
   }
 });
@@ -32,17 +35,12 @@ router.get('/post/:id', async (req, res) => {
       include: [
         {
           model: User,
-          attributes: ['username'],
+          attributes: ["name"],
         },
-        {
-          model: Comment,
-          include: [
-            {
-              model: User,
-              attributes: ['username'],
-            },
-          ],
-        },
+        // {
+        //   model: Comment,
+        //   attributes: ["comment_body"],
+        // },
       ],
     });
 
@@ -53,11 +51,40 @@ router.get('/post/:id', async (req, res) => {
       logged_in: req.session.logged_in,
     });
   } catch (err) {
+    console.log(err)
     res.status(500).json(err);
   }
 });
 
-// Login route
+
+// Get single post
+router.get('/blogPost/:id', async (req, res) => {
+  try {
+    const postData = await Post.findByPk(req.params.id, {
+      include: [
+        {
+          model: User,
+          attributes: ["name"],
+        },
+        // {
+        //   model: Comment,
+        //   attributes: ["comment_body"],
+        // },
+      ],
+    });
+
+    const post = postData.get({ plain: true });
+
+    res.render('blogPost', {
+      ...post,
+      logged_in: req.session.logged_in,
+    });
+  } catch (err) {
+    console.log(err)
+    res.status(500).json(err);
+  }
+});
+
 router.get('/login', (req, res) => {
   if (req.session.logged_in) {
     res.redirect('/');
@@ -67,7 +94,6 @@ router.get('/login', (req, res) => {
   res.render('login');
 });
 
-// Signup route
 router.get('/signup', (req, res) => {
   if (req.session.logged_in) {
     res.redirect('/');
@@ -86,8 +112,10 @@ router.get('/dashboard', withAuth, async (req, res) => {
       },
       include: [
         {
-          model: User,
-          attributes: ['username'],
+          model: User
+        },
+        {
+          model: Comment,
         },
       ],
     });
@@ -97,8 +125,10 @@ router.get('/dashboard', withAuth, async (req, res) => {
     res.render('dashboard', {
       posts,
       logged_in: req.session.logged_in,
+      // name: req.session.name, // ?
     });
   } catch (err) {
+    console.log(err);
     res.status(500).json(err);
   }
 });
