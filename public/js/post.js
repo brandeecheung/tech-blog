@@ -8,12 +8,8 @@ deleteButton[0].addEventListener("click", deletePostHandler);
 
 async function deletePostHandler(event) {
     event.preventDefault();
-    console.log("clicked me");
-    console.log(event.target);
 
     let blogPostId = event.target.getAttribute("data-id");
-    console.log(blogPostId);
-
     const response = await fetch(`/api/posts/${blogPostId}`, {
         method: "DELETE",
     });
@@ -28,12 +24,8 @@ async function deletePostHandler(event) {
 async function editButtonHandler(event) {
     event.preventDefault();
 
-    console.log("action")
-
     const title = document.querySelector("#titleInput").value.trim();
     const content = document.querySelector("#bodyInput").value.trim();
-
-    console.log(content)
 
     var response;
 
@@ -52,7 +44,6 @@ async function editButtonHandler(event) {
         });
 
         if (!response.ok) {
-            console.log(response.statusText);
             alert(response.statusText);
         }
         else {

@@ -14,8 +14,6 @@ router.get('/', async (req, res) => {
       ],
     });
 
-    // console.log(postData)
-
     const posts = postData.map((post) => post.get({ plain: true }));
 
     res.render('homepage', {
@@ -23,7 +21,6 @@ router.get('/', async (req, res) => {
       logged_in: req.session.logged_in,
     });
   } catch (err) {
-    console.log(err);
     res.status(500).json(err);
   }
 });
@@ -51,7 +48,6 @@ router.get('/post/:id', async (req, res) => {
       logged_in: req.session.logged_in,
     });
   } catch (err) {
-    console.log(err)
     res.status(500).json(err);
   }
 });
@@ -80,7 +76,6 @@ router.get('/blogPost/:id', async (req, res) => {
       logged_in: req.session.logged_in,
     });
   } catch (err) {
-    console.log(err)
     res.status(500).json(err);
   }
 });
@@ -125,10 +120,9 @@ router.get('/dashboard', withAuth, async (req, res) => {
     res.render('dashboard', {
       posts,
       logged_in: req.session.logged_in,
-      // name: req.session.name, // ?
+      name: req.session.user_id,
     });
   } catch (err) {
-    console.log(err);
     res.status(500).json(err);
   }
 });
